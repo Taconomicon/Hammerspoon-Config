@@ -1,3 +1,4 @@
+require "config"
 require "wm"
 
 -------------------------------------------------------------------
@@ -38,16 +39,16 @@ if enable_window_snapping_with_keyboard == true then
 	})
 
 	key_bind({"ctrl", "alt", "cmd", "shift"}, {
-		up 		= b_top_left,
-		down 	= b_low_right,
-		left 	= b_low_left,
-		right = b_top_right
+		up 		= b_move_up,
+		down 	= b_move_down,
+		left 	= b_move_left,
+		right = b_move_right
 	})
 
 	-- Set window size to quaters
 	hk.bind({"ctrl", "cmd"}, "=", function()
 		print("Increasing window size... 1/" .. div_size .. " --> 1/" .. 2)
-			div_size = 2
+		div_size = 2
 	end)
 
 	-- Set window size to eighths (16ths?)

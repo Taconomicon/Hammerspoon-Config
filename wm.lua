@@ -10,8 +10,6 @@ require "config"
 -- Globals
 -------------------------------------------------------------------
 
-local hk = require "hs.hotkey"
-
 --required to be non zero for dragging windows to work some weird timing issue with hammerspoon fighting against osx events
 if hs.window.animationDuration <= 0 then
 	hs.window.animationDuration = 0.00000001
@@ -22,6 +20,17 @@ dragging = 0
 
 --the window being dragged
 dragging_window = nil
+
+-- flags for quarter windows
+x_pos = "none"
+y_pos = "none"
+div_size = 2
+
+window_border_size_double = window_border_size * 2
+
+-------------------------------------------------------------------
+-- Helper functions
+-------------------------------------------------------------------
 
 -- Exists because lua doesn't have a round function. WAT?!
 function round(num)
@@ -41,16 +50,6 @@ function get_window_under_mouse()
 		return my_screen == w:screen() and my_pos:inside(w:frame())
 	end)
 end
-
--- flags for quarter windows
-x_pos = "none"
-y_pos = "none"
-
-window_border_size_double = window_border_size * 2
-
--------------------------------------------------------------------
--- Helper functions
--------------------------------------------------------------------
 
 -- Set quater window flags based on current window position
 function set_quad()
@@ -288,38 +287,6 @@ function right_half()
 	-- win:setFrame(f)
 end
 
-function top_left()
-	set_quad()
-	if (x_pos == "left") then
-		translate_x(2, true)
-	end
-	translate_y(2, true)
-end
-
-function top_right()
-	set_quad()
-	if (x_pos == "left") then
-		translate_x(2, true)
-	end
-	translate_y(2, false)
-end
-
-function low_left()
-	set_quad()
-	translate_x(2, true)
-	if (y_pos == "high") then
-		translate_y(2, true)
-	end
-end
-
-function low_right()
-	set_quad()
-	translate_x(2, false)
-	if (y_pos == "high") then
-		translate_y(2, true)
-	end
-end
-
 function move_up()
 		set_quad()
 		translate_y(div_size, true)
@@ -347,10 +314,10 @@ function b_bottom_half() 	call_borderless(bottom_half)	end
 function b_left_half()  	call_borderless(left_half) 		end
 function b_right_half() 	call_borderless(right_half) 	end
 
-function b_top_left()  		call_borderless(top_left) 		end
-function b_low_right() 		call_borderless(low_right) 		end
-function b_low_left()  		call_borderless(low_left) 		end
-function b_top_right() 		call_borderless(top_right) 		end
+function b_move_up()  		call_borderless(move_up) 			end
+function b_move_down() 		call_borderless(move_down) 		end
+function b_move_left()  	call_borderless(move_left) 		end
+function b_move_right() 	call_borderless(move_right) 	end
 
 -------------------------------------------------------------------
 --Window snapping with mouse, Windows style (Cinch Alternative)

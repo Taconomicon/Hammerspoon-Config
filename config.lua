@@ -38,7 +38,7 @@ window_border_size = 30
 -- Key Binding Utility
 -- Source: https://github.com/S1ngS1ng/HammerSpoon/blob/master/key-binding.lua
 
-local hk = require "hs.hotkey"
+hk = require "hs.hotkey"
 
 --- Bind hotkey for window management.
 -- @function key_bind
